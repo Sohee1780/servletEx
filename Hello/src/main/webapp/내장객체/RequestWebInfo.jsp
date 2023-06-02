@@ -9,7 +9,6 @@
 <body>
 <h2>1. 클라이언트와 서버의 환경정보 읽기</h2>
     <ul>
-    test
         <li>데이터 전송 방식 : <%= request.getMethod() %></li>
         <li>URL : <%= request.getRequestURL() %></li>
         <li>URI : <%= request.getRequestURI() %></li>
