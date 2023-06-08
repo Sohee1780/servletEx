@@ -19,6 +19,10 @@ http://localhost:8090/%EB%82%B4%EC%9E%A5%EA%B0%9D%EC%B2%B4/RequestWebInfo.jsp
 		404 : 페이지를 찾을수 없음 
 		서버에 파일이 없는경우, 또는 경로가 일치 하지 않는경우
 		URL경로를 확인해봐야 함!!!!!!!!!!		
+		
+		url로 호출 : 무조건 get 방식으로 호출
+		http://	 : 프로토콜 = 통신규약
+		www.naver.com : (ip, port) = 웹서버를 찾아갑니다
 	-->
 	<p><a href="RequestWebInfo.jsp?eng=hello&han=안녕">GET방식 요청</a><p>
 	
@@ -49,22 +53,9 @@ http://localhost:8090/%EB%82%B4%EC%9E%A5%EA%B0%9D%EC%B2%B4/RequestWebInfo.jsp
         <input type="submit" value="전송하기" />
 	</form>
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<h2>3. HTTP 요청 헤더 정보 읽기</h2>
+	<a href="RequestHeader.jsp">요청 헤더 정보 일기</a>
+	
 
 
 </body>
