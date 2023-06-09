@@ -16,7 +16,7 @@
 		out.print("<br>파일 경로를 확인해주세요.");
 	}else if(status == 405){
 		out.print("ERROR CODE : 405");
-		out.print("<br>요청방식(method)를 확인해주세요.");
+		out.print("<br>요청방식(method)을 확인해주세요.");
 	}else if(status == 500){
 		out.print("ERROR CODE : 500");
 		out.print("<br>관리자에게 문의해주세요.");

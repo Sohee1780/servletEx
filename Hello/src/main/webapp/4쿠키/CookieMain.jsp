@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,6 +10,7 @@
 <body>
 <!-- 
 	cookie
+	요청시 요청헤더에 쿠키정보를 포함하여 요청!
 	클라이언트의 상태 정보를 클라이언트 PC에 저장합니다.
 	로그인아이디를 저장하거나, 팝업창을 제어하는데 주로 사용됩니다.
 	
@@ -30,8 +32,7 @@
 		이름 : 쿠키를 구별하는 이름
 		값 : 쿠키에 저장할 실제 데이터
 	*/
-	
-	Cookie cookie = new Cookie("myCookie", "쿠키맛나요");
+	Cookie cookie = new Cookie("myCookie", URLEncoder.encode("쿠키맛나요","utf-8"));
 	// 쿠키가 적용될 경로를 지정(하위경로까지 사용가능) 
 	// getContextPath() : request 객체로 부터 컨텍스트 루트 경로 조회
 	// 루트경로로 지정하게 되면 웹애플리케이션 전체에서 쿠키를 사용하겠따는 의미
@@ -41,7 +42,9 @@
 	cookie.setMaxAge(3600);
 	
 	// 생성한 쿠키를 응답객체에 추가 
-	response.addCookie(cookie);
+	response.addCookie(cookie);	
 %>
+	<h3>2. 페이지 이동 후 쿠키 값 확인하기</h3>
+	<a href="CookieResult.jsp">쿠키값 확인하기</a>
 </body>
 </html>

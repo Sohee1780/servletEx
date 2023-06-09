@@ -1,3 +1,4 @@
+<%@page import="util.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -42,6 +43,9 @@
                 	
                 	<!-- 로그인 : method를 post로 설정해서 아이디/비밀번호가 노출되는걸 막아줍니다. -->
                 	<%
+                		// 쿠키에 저장된 아이디가 있다면 아이디를 텍스트필드에 value값으로 출력
+                		String userId = CookieManager.readCookie(request, "userId");
+                		
                 		// 로그인 성공 시 로그인 박스 숨겨줌
                 		String name = "";
                 		if(session.getAttribute("id")!=null){
@@ -52,7 +56,8 @@
                 			// 로그인 되었다고 판단
                 			// out.print(name+"님 환영합니다.");
                 	%>
-                		<%= name + "님 환영합니다." %>
+                		<%= name + "님 환영합니다."%>
+           
                 		<button onclick="location.href='logout.jsp'">로그아웃</button>
                 	<%
                 		}else{
@@ -60,7 +65,7 @@
                 	<form action="loginAction.jsp" method="post">	
                     <div class='loginbox'>
                         <div id='login'>
-                            <input type="text" name="userid" id="userid" placeholder='ID를 입력해주세요.' required="required">
+                            <input type="text" name="userid" id="userid" placeholder='ID를 입력해주세요.' required="required" value="<%=userId%>">
                             <input type="password" name="userpw" id="userpw" placeholder='PW를 입력해주세요.' required="required">
                         </div>
                         <div id='button'>
@@ -69,6 +74,8 @@
                     </div>
                     
                     <div id='info'>
+                    	<!-- 선택되었을때만 서버에 넘어갑니다. 선택안하면 안넘어감(선택 안하고 값을 출력해보면 null) -->
+                    	<input type="checkbox" name="save_check" value="Y" <%= !"".equals(userId)? "checked":""%>>아이디 저장하기<br>
                         <a href="">회원가입</a>
                         <a href="">ID찾기</a>
                         <a href="">PW찾기</a>
