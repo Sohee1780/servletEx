@@ -17,7 +17,7 @@
 	
 	String searchField = request.getParameter("searchField");
 	String searchWord = request.getParameter("searchWord");
-	
+	// 널처리
 	// 검색어가 null이 아니면 검색 기능을 추가
 	out.print(searchField);
 	out.print(searchWord);
