@@ -1,3 +1,5 @@
+<%@page import="dto.Member"%>
+<%@page import="dao.MemberDao"%>
 <%@page import="util.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -17,6 +19,9 @@
 		String saveYN = request.getParameter("save_check");
 		out.print("saveYN : "+saveYN+"<br>");
 		
+		MemberDao dao = new MemberDao();
+		Member member = dao.login(id,pw);
+		
 		// 아이디 저장하기 체크박스에 체크가 되었다면
 		// 쿠키에 아이디를 저장합니다.
 		// userId, 사용자 아이디
@@ -34,7 +39,8 @@
 			*/
 		}
 		
-		if("abc".equals(id) && "123".equals(pw)){
+		// DB 조회 결과 id/pw가 일치하는 회원이 있으면 로그인 성공
+		if(member != null && !"".equals(member.getName())){
 			// out.write(""); <- 내장객체를 이용한 출력
 			response.sendRedirect("login.jsp?name="+id);
 		}else{
