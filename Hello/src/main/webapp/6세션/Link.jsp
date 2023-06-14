@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<style>
+	a{
+		text-decoration-line : none; 
+	}
+</style>
 <table border="1" width="90%"> 
     <tr>
         <td align="center">

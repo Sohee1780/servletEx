@@ -11,24 +11,23 @@
 </head>
 <body>
 <%
-	BoardDao board = new BoardDao();
-	List<Board> boardList = board.getList();
-	int totalCount = board.getTotalCount();
-	
 	String searchField = request.getParameter("searchField");
 	String searchWord = request.getParameter("searchWord");
-	// 널처리
-	// 검색어가 null이 아니면 검색 기능을 추가
-	out.print(searchField);
-	out.print(searchWord);
+	
+	BoardDao board = new BoardDao();
+	List<Board> boardList = board.getList(searchField, searchWord);
+	int totalCount = board.getTotalCount(searchField, searchWord);
+	
+	searchWord = searchWord==null?"" : searchWord;
 %>
+
 <jsp:include page="Link.jsp" />
 	<h2>목록보기(list)</h2>
 
 	총 건수 : <%=totalCount %>
-	<!-- method 기본값 get 생략가능 -->
+	<!-- method 기본값 get 생략가능 action이 없으면 자기 페이지 다시 요청-->
 	<!-- 검색폼 -->
-	<form method="get">
+	<form>
 	<table border="1" width="90%">
 		<tr>
 			<td align="center">
@@ -64,7 +63,7 @@
 		%>
 		<tr>
 			<td><%=b.getNum() %></td>
-			<td><%=b.getTitle() %></td>
+			<td><a href="View.jsp?num=<%= b.getNum()%>" style="text-decoration-line:none;"><%=b.getTitle()%></a></td>
 			<td><%=b.getId() %></td>
 			<td><%=b.getVisitCount() %></td>
 			<td><%=b.getPostDate() %></td>
@@ -74,12 +73,23 @@
 			}
 		%>
 	</table>
+	
 	<form>
 		<table border="1" width="90%">
 		<tr>
 			<td align="right">
-				<input type="button" value="글쓰기">
+			<%
+				if(session.getAttribute("UserId")!=null){
+			%>
+				<input type="button" value="글쓰기" onclick="location.href='Write.jsp'">
+			<%
+				}else {
+			%>
+				로그인이 필요합니다.
 			</td>
+			<%
+				}
+			%>
 		</tr>
 		</table>
 	</form>

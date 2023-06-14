@@ -1,4 +1,4 @@
--- È¸¿øÅ×ÀÌºí »ı¼º
+-- íšŒì› í…Œì´ë¸” ìƒì„±
 create table member (
     id varchar2(10) not null,
     pass varchar2(10) not null,
@@ -6,29 +6,58 @@ create table member (
     regidate date default sysdate not null,
     primary key (id)
 );
--- °Ô½ÃÆÇ Å×ÀÌºí »ı¼º
+
+-- ê²Œì‹œíŒ í…Œì´ë¸” ìƒì„±
 create table board (
     num number primary key,
     title varchar2(200) not null,
     content varchar2(2000) not null,
-    id varchar2(10) not null, 
+    id varchar2(10) not null,
     postdate date default sysdate not null,
     visitcount number(6)
 );
 
--- ¿Ü·¡Å° Ãß°¡
-ALTER TABLE board ADD CONSTRAINT BOARD_MEM_FK FOREIGN KEY(id) REFERENCES MEMBER(id);
+-- ì™¸ë˜í‚¤ ì¶”ê°€
+alter table board
+    add constraint board_mem_fk foreign key (id)
+    references member (id);
 
--- ½ÃÄö½º »ı¼º
-CREATE SEQUENCE seq_board_num MINVALUE 1 NOMAXVALUE NOCYCLE NOCACHE;
+-- ì‹œí€€ìŠ¤ ìƒì„±
+create sequence seq_board_num 
+    increment by 1
+    start with 1
+    minvalue 1
+    nomaxvalue
+    nocycle
+    nocache;
+    
+-- ë”ë¯¸ë°ì´í„° ì…ë ¥
+insert into member (id, pass, name) values ('test', '1234', 'ë¨¸ìŠ¤íŠ¸í•´ë¸Œ');
+insert into board  (num, title, content, id, postdate, visitcount) 
+	values (seq_board_num.nextval, 'ì œëª©1ì…ë‹ˆë‹¤', 'ë‚´ìš©1ì…ë‹ˆë‹¤', 'test', sysdate, 0);
 
--- ´õ¹Ìµ¥ÀÌÅÍ ÀÔ·Â
-insert into member (id, pass, name) values ('test', '1234', '¸Ó½ºÆ®ÇØºê');
-insert into board (num, title, content, id, postdate, visitcount) values(seq_board_num.nextval, 'Á¦¸ñ1ÀÔ´Ï´Ù', '³»¿ë1ÀÔ´Ï´Ù', 'test', sysdate, 0);
+-- comment ì¶”ê°€
+comment on table board is 'ê²Œì‹œíŒ';
+comment on column board.num is 'ì¼ë ¨ë²ˆí˜¸';
+comment on column board.title is 'ì œëª©';
+comment on column board.content is 'ë‚´ìš©';
+comment on column board.id is 'ì‘ì„±ì ì•„ì´ë””';
+comment on column board.postdate is 'ì‘ì„±ì¼';
+comment on column board.visitcount is 'ì¡°íšŒìˆ˜';
 
--- ÄÚ¸àÆ® ÀÔ·Â
-COMMENT ON COLUMN MEMBER.id IS '¾ÆÀÌµğ';
-COMMENT ON COLUMN member.pass IS 'ÆĞ½º¿öµå';
-COMMENT ON COLUMN member.name IS 'ÀÌ¸§';
-COMMENT ON COLUMN member.regidate IS '°¡ÀÔ ³¯Â¥';
+comment on table member is 'íšŒì›';
+comment on column member.id is 'ì•„ì´ë””';
+comment on column member.pass is 'ë¹„ë°€ë²ˆí˜¸';
+comment on column member.name is 'ì´ë¦„';
+comment on column member.regidate is 'ìƒì„±ì¼';
 
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
