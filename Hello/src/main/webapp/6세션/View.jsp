@@ -22,7 +22,7 @@
 	
 %>
 <script>
-	fuction deletePost(){
+	function deletePost(){
 		var res = confirm("삭제 하시겠습니까?"); // true, false
 		if(res) {
 			// 1. 보드가 먼저 생성되야 참조를 할수있으므로 보드생성을 위로 올리는 방법
@@ -49,7 +49,7 @@
 	</tr>
 	<tr style="height:100px;">
 		<td>내용</td>
-		<td colspan='3' ><%= board.getContent() %></td>
+		<td colspan='3' ><%= board.getContent().replace("\r\n", "<br/>") %></td>
 	</tr>
 		<tr>
 			<td colspan='4' align="right">
@@ -61,7 +61,7 @@
 				board.getId().equals(session.getAttribute("UserId").toString())){
 		%>	
 				<button type="button" onclick="location.href='Edit.jsp?num=<%= board.getNum()%>'">수정하기</button>
-				<button type="button" onclick="">삭제하기</button>
+				<button type="button" onclick="deletePost()">삭제하기</button>
 		<%
 			}
 		%>

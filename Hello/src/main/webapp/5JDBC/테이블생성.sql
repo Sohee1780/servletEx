@@ -51,8 +51,15 @@ comment on column member.pass is '비밀번호';
 comment on column member.name is '이름';
 comment on column member.regidate is '생성일';
 
+-- 오늘 날짜와 같으면 시간을 보여주고 아니면 날짜를 보여줌
+select num, title, content, id, 
+decode(trunc(sysdate), trunc(postdate), to_char(postdate, 'hh24:mi:ss'), to_char(postdate, 'yyyy-mm-dd')),
+visitcount
+from board order by num desc;
 
-    
+-- 날짜 비교
+select decode(trunc(sysdate), trunc(postdate), to_char(postdate, 'hh24:mi:ss'), to_char(postdate, 'yyyy-mm-dd'))
+from board;
     
     
     

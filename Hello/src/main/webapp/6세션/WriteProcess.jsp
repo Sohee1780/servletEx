@@ -13,7 +13,6 @@
 <%@include file="isLogin.jsp" %>
 <%
 	request.setCharacterEncoding("utf-8");	
-	JSFunction jsF = new JSFunction();
 	
 	// 1.입력값을 받아서 DTO객체를 생성
 	String title = request.getParameter("title");
