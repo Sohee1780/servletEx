@@ -3,7 +3,7 @@ package dto;
 public class Criteria {
 	
 	private String searchField;
-	private String searchWord;
+	private String searchWord="";
 	
 	int pageNo = 1; // 페이지 번호
 	int amount = 10; // 한페이지당 보여질 게시물 수
@@ -34,14 +34,21 @@ public class Criteria {
 		this.amount = amount;
 	}
 
-	public Criteria(String searchField, String searchWord, int pageNo) {
+	public Criteria(String searchField, String searchWord, String pageNoStr) {
 		super();
-		this.searchField = searchField;
-		this.searchWord = searchWord;
-		if(pageNo>0) {			
-			this.pageNo = pageNo;
-			endNo = pageNo * amount;
-			startNo = pageNo * amount - (amount -1);
+		if(searchWord!=null) {
+			this.searchField = searchField;
+			this.searchWord = searchWord;			
+		}
+		
+		if(pageNoStr!=null) {
+			pageNo = Integer.parseInt(pageNoStr);
+			if(pageNo>0) {			
+				endNo = pageNo * amount;
+				startNo = pageNo * amount - (amount -1);
+			}
+		} else {
+			pageNo=1;
 		}
 	}
 

@@ -1,3 +1,4 @@
+<%@page import="dto.pageDto"%>
 <%@page import="dto.Criteria"%>
 <%@page import="dto.Board"%>
 <%@page import="java.util.List"%>
@@ -11,26 +12,42 @@
 <title>회원제 게시판</title>
 </head>
 <%
+
+
 	// 검색조건
 	String searchField = request.getParameter("searchField");
 	String searchWord = request.getParameter("searchWord");
-	int pageNo = request.getParameter("pageNo")==null?1:Integer.parseInt(request.getParameter("pageNo"));
+	String pageNo = request.getParameter("pageNo");
+	
+	/*
+	String reset = request.getParameter("searchWord");
+	
+	//검색했을때 페이지 1로초기화되지만 옆페이지로 넘어갈수없음
+	if(reset!=null && !"".equals(reset)){
+		pageNo="1";
+		reset="";
+	}*/
 	
 	Criteria criteria = new Criteria(searchField, searchWord, pageNo);
 	
-	searchWord = searchWord==null?"":request.getParameter("searchWord");
+	String re = request.getParameter("searchWord");
+	
+	
 	
 	// newBoardDao생성해서 리스트 받아오기
 	NewBoaderDao newBoardDao = new NewBoaderDao();
-	List<Board> list = newBoardDao.getList(criteria);	
-	// List<Board> list = newBoardDao.getListPage(criteria);	
+	// List<Board> list = newBoardDao.getList(criteria);	
+	List<Board> list = newBoardDao.getListPage(criteria);
+	
+	int totalCount = newBoardDao.getTotalCount(criteria);
 %>
 <body>
 <%@include file="../6세션/Link.jsp" %>
 	<h1>new</h1>
     <h2>목록 보기(List)</h2>
     <!-- 검색폼 --> 
-    <form method="get">  
+    <form name="searchForm" method="get"> 
+    <input type='text' name='pageNo' value='<%= criteria.getPageNo()%>'>
     <table border="1" width="90%">
     <tr>
         <td align="center">
@@ -38,7 +55,7 @@
                 <option value="title">제목</option> 
                 <option value="content">내용</option>
             </select>
-            <input type="text" name="searchWord" value="<%= searchWord %>"/>
+            <input type="text" name="searchWord" value="<%= criteria.getSearchWord() %>"/>
             <input type="submit" value="검색하기" />
         </td>
     </tr>   
@@ -70,7 +87,7 @@
         <tr align="center">	
             <td><%=b.getNum() %></td>  <!--게시물 번호-->
             <td align="left" style="padding-left:7px;"> <!--제목(+ 하이퍼링크)--> 
-                <a href="View.jsp?num=<%= b.getNum() %>" style="text-decoration-line: none;"><%= b.getTitle() %></a>
+                <a href="View.jsp?num=<%= b.getNum() %>&pageNo=<%=criteria.getPageNo() %>" style="text-decoration-line: none;"><%= b.getTitle() %></a>
             </td>
             <td align="center"><%= b.getId() %></td> <!--작성자 아이디-->
             <td align="center"><%= b.getVisitCount() %></td> <!--조회수-->
@@ -96,5 +113,20 @@
     	}
     %>
     
+    <!-- 
+    	페이지 블럭 생성 시작
+    	- 총 건수 조회
+    	- 쿼리 수정
+    	- form의 이름을 searchForm으로 지정
+    	- pageNo 필드를 생성
+    -->
+	<%
+   		pageDto pageDto = new pageDto(totalCount, criteria);
+	%>
+    <table border="1" width="90%">
+    	<tr align="center">
+    		<td><%@include file="../6세션/PageNavi.jsp" %></td>
+    	</tr>
+    </table>
 </body>
 </html>

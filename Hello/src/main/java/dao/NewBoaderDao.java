@@ -78,8 +78,8 @@ public class NewBoaderDao {
 			
 			while(rs.next()) {
 				Board board = new Board(
-						rs.getString("num"),rs.getString("title"),rs.getString("content"),
-						rs.getString("id"),rs.getString("postdate"),rs.getString("visitcount"));
+						rs.getString(2),rs.getString(3),rs.getString(4),
+						rs.getString(5),rs.getString(6),rs.getString(7));
 				list.add(board);
 			}
 			
@@ -130,7 +130,7 @@ public class NewBoaderDao {
 				board.setContent(rs.getString("content"));
 				board.setId(rs.getString("id"));
 				board.setPostDate(rs.getString("postdate"));
-				board.setVisitCount(rs.getString("visitdate"));
+				board.setVisitCount(rs.getString("visitcount"));
 			}
 			
 		} catch (SQLException e) {
@@ -155,7 +155,30 @@ public class NewBoaderDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public int getTotalCount(Criteria criteria) {
+		int total = 0;
+		String sql = "select count(num) from board";
 		
+		if(criteria.getSearchWord()!=null && !"".equals(criteria.getSearchWord())) {
+			sql+=" where "+criteria.getSearchField()+" like '%"+criteria.getSearchWord()+"%'";
+		}
 		
+		try (Connection conn = DBConnPool.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(sql);){
+			ResultSet rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				total = rs.getInt(1);
+			}
+			rs.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return total;
 	}
 }

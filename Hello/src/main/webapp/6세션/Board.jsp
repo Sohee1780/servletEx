@@ -1,3 +1,5 @@
+<%@page import="dto.pageDto"%>
+<%@page import="dto.Criteria"%>
 <%@page import="dto.Board"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.BoardDao"%>
@@ -10,15 +12,23 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 <%
 	String searchField = request.getParameter("searchField");
 	String searchWord = request.getParameter("searchWord");
+	String pageNo = request.getParameter("pageNo");
+	// 검색어가 null인경우 빈문자열로 치환
+	// searchWord = searchWord==null?"" : searchWord;
 	
 	BoardDao board = new BoardDao();
-	List<Board> boardList = board.getList(searchField, searchWord);
-	int totalCount = board.getTotalCount(searchField, searchWord);
+	// 검색조건 객체로 생성
+	Criteria criteria = new Criteria(searchField, searchWord, pageNo);
 	
-	searchWord = searchWord==null?"" : searchWord;
+	// 리스트 조회
+	// List<Board> boardList = board.getList(searchField, searchWord); 페이징X
+	List<Board> boardList = board.getListPage(criteria); // 페이징O
+	// 총 건수 조회
+	int totalCount = board.getTotalCount(criteria);
 %>
 
 <jsp:include page="Link.jsp" />
@@ -27,15 +37,16 @@
 	총 건수 : <%=totalCount %>
 	<!-- method 기본값 get 생략가능 action이 없으면 자기 페이지 다시 요청-->
 	<!-- 검색폼 -->
-	<form>
-	<table border="1" width="90%">
+	<form name='searchForm'>
+	<input type='text' name='pageNo' value='<%=criteria.getPageNo()%>'>
+ 	<table border="1" width="90%">
 		<tr>
 			<td align="center">
 				<select name="searchField">
 					<option value="title">제목</option>
 					<option value="content">내용</option>
 				</select>
-				<input type="text" name="searchWord" value=<%=searchWord %>>
+				<input type="text" name="searchWord" value=<%=criteria.getSearchWord() %>>
 				<input type="submit" value="검색하기">
 			</td>
 		</tr>
@@ -74,24 +85,35 @@
 		%>
 	</table>
 	
-	<form>
-		<table border="1" width="90%">
+	<table border="1" width="90%">
+	<tr>
+		<td align="right">
+		<%
+			if(session.getAttribute("UserId")!=null){
+		%>
+			<input type="button" value="글쓰기" onclick="location.href='Write.jsp'">
+		<%
+			}else {
+		%>
+			로그인이 필요합니다.
+		</td>
+		<%
+			}
+		%>
+	</tr>
+	</table>
+	
+	<%
+		pageDto pageDto = new pageDto(totalCount, criteria);
+	%>
+	
+	<!-- 페이지블럭 생성 시작 -->
+	<table border="1" width="90%">
 		<tr>
-			<td align="right">
-			<%
-				if(session.getAttribute("UserId")!=null){
-			%>
-				<input type="button" value="글쓰기" onclick="location.href='Write.jsp'">
-			<%
-				}else {
-			%>
-				로그인이 필요합니다.
+			<td align="center">
+				<%@include file="PageNavi.jsp" %>
 			</td>
-			<%
-				}
-			%>
 		</tr>
-		</table>
-	</form>
+	</table>
 </body>
 </html>

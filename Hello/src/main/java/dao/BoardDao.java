@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import common.DBConnPool;
 import dto.Board;
+import dto.Criteria;
 
 public class BoardDao {
 
@@ -41,12 +42,12 @@ public class BoardDao {
 	}
 
 	// 게시물의 개수를 반환하는 메서드
-	public int getTotalCount(String searchField, String searchWord) {
+	public int getTotalCount(Criteria criteia) {
 		int totalCount=0;
 		String sql = "select count(*) from board ";
 		
-		if(searchWord!=null && !"".equals(searchWord)) {
-			sql += "where "+searchField+" like '%"+searchWord+"%' ";
+		if(criteia.getSearchWord()!=null && !"".equals(criteia.getSearchWord())) {
+			sql += "where "+criteia.getSearchField()+" like '%"+criteia.getSearchWord()+"%' ";
 		}
 		
 		sql += "order by num desc";
@@ -101,6 +102,47 @@ public class BoardDao {
 				board.setId(rs.getString(4));
 				board.setPostDate(rs.getString(5));
 				board.setVisitCount(rs.getString(6));
+	
+				boardList.add(board);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("게시물 조회 중 예외 발생");
+		}
+		
+		return boardList;
+		
+	}
+	
+	public List<Board> getListPage(Criteria criteria) {
+		List<Board> boardList = new ArrayList<Board>();
+		String sql="select * from ( select rownum rn, t.* from( select board.* from board ";
+		
+		// 검색어가 입력 되었으면 검색 조건을 추가합니다.
+		if(criteria.getSearchWord()!=null && !"".equals(criteria.getSearchWord())) {
+			sql += "where " + criteria.getSearchField() + " like '%"+criteria.getSearchWord()+"%' ";
+		}
+		sql += "order by num desc )t ) where rn between "+criteria.getStartNo()+" and "+criteria.getEndNo();
+		
+		
+		try(Connection conn = DBConnPool.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(sql);) {
+			ResultSet rs = psmt.executeQuery();
+			
+			// 게시글의 수만큼 반복
+			while(rs.next()) {
+				Board board = new Board();
+				
+				// 게시물의 한 행을 DTO에 저장 후 boardList에 추가
+				board.setNum(rs.getString("num"));
+				board.setTitle(rs.getString(3));
+				board.setContent(rs.getString(4));
+				board.setId(rs.getString(5));
+				board.setPostDate(rs.getString(6));
+				board.setVisitCount(rs.getString(7));
+//				rs.getString("rn");
 	
 				boardList.add(board);
 			}
@@ -175,7 +217,8 @@ public class BoardDao {
 		int res = 0;
 		String sql = "update board set title=?, content=? where num=?";
 		
-		System.out.println(board.getTitle());
+		System.out.println(sql);
+		System.out.println(board.getNum());
 		try (Connection conn = DBConnPool.getConnection();
 			PreparedStatement psmt = conn.prepareStatement(sql);){
 			psmt.setString(1, board.getTitle());
@@ -206,7 +249,7 @@ public class BoardDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return res;
 	}
 }

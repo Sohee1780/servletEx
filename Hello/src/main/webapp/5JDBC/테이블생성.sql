@@ -61,10 +61,15 @@ from board order by num desc;
 select decode(trunc(sysdate), trunc(postdate), to_char(postdate, 'hh24:mi:ss'), to_char(postdate, 'yyyy-mm-dd'))
 from board;
     
-    
-    
-    
-    
+
+-- 페이징 쿼리
+select * from (
+    select rownum rn, t.* from(
+        select board.*
+        from board
+        order by num desc
+    ) t
+)where rn between 1(시작번호) and 10(끝번호);
     
     
     
