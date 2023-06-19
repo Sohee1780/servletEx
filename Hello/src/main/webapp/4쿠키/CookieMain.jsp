@@ -35,7 +35,7 @@
 	Cookie cookie = new Cookie("myCookie", URLEncoder.encode("쿠키맛나요","utf-8"));
 	// 쿠키가 적용될 경로를 지정(하위경로까지 사용가능) 
 	// getContextPath() : request 객체로 부터 컨텍스트 루트 경로 조회
-	// 루트경로로 지정하게 되면 웹애플리케이션 전체에서 쿠키를 사용하겠따는 의미
+	// 루트경로로 지정하게 되면 웹애플리케이션 전체에서 쿠키를 사용하겠다는 의미
 	cookie.setPath(request.getContextPath());
 	
 	// 쿠키가 유지될 기간을 초단위로 지정(3600=1시간)
