@@ -39,7 +39,7 @@
   </context-param>
   
   <!-- 에러페이지 처리하기 -->
-  	<!-- 에러페이지 처리하기 -->
+  	<!-- 에러페이지 처리하기 
 	<error-page>
 		<error-code>404</error-code>
 		<location>/2내장객체/Exception.jsp</location>
@@ -52,7 +52,7 @@
 		<error-code>500</error-code>
 		<location>/2내장객체/Exception.jsp</location>
 	</error-page>
-	
+	-->
 	<resource-ref>
 	 <description>Oracle Datasource example</description>
 	 <res-ref-name>jdbc/myoracle</res-ref-name>

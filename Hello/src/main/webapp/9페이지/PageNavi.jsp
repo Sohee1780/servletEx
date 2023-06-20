@@ -18,7 +18,26 @@
 	- 다음 버튼을 출력할지 여부
 	
 -->
-<%
+
+<!-- 영역에 저장 -->
+<c:set var="pageDto" value="<%=pageDto %>"></c:set>
+
+<!-- 이전 -->
+<c:if test="${pageDto.prev }">
+	<a href='List.jsp?pageNo=${pageDto.startNo-1 }'>이전</a>
+</c:if>
+
+<!-- 페이지 번호 -->
+<c:forEach begin="${pageDto.startNo }" end="${pageDto.endNo }" step="1" var="pageNo">
+	<a href='List.jsp?pageNo=${pageNo }'>${pageNo }</a>
+</c:forEach>
+
+<!-- 이후 -->
+<c:if test="${pageDto.next }">
+	<a href='List.jsp?pageNo=${pageDto.endNo+1 }'>이후</a>
+</c:if>
+<!--  
+< %
 	/*
 	// 총 게시물 수, 검색조건(페이지번호, 페이지당게시물수, 검색어, 검색조건)
 	int pageNo=request.getParameter("pageNo")==null?1:Integer.parseInt(request.getParameter("pageNo"));
@@ -49,6 +68,6 @@
 		out.print(">");
 		out.print("</a>");
 	}
-%>
+% >-->
 </body>
 </html>
