@@ -27,6 +27,20 @@ public class Criteria {
 			startNo = pageNo * amount - (amount -1);
 		}
 	}
+	
+	public Criteria(String pageNoStr) {
+		// 페이지 계산
+		super();
+		if(pageNoStr!=null) {
+			pageNo = Integer.parseInt(pageNoStr);
+			if(pageNo>0) {			
+				endNo = pageNo * amount;
+				startNo = pageNo * amount - (amount -1);
+			}
+		} else {
+			pageNo=1;
+		}
+	}
 
 	public Criteria(int pageNo, int amount) {
 		super();
