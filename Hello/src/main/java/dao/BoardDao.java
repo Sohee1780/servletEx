@@ -11,7 +11,7 @@ import dto.Board;
 import dto.Criteria;
 
 public class BoardDao {
-
+	
 	public BoardDao() {
 		// TODO Auto-generated constructor stub
 	}

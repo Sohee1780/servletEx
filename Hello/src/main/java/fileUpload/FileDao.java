@@ -11,16 +11,6 @@ import common.DBConnPool;
 import dto.Criteria;
 
 public class FileDao {
-
-	public static void main(String[] args) {
-		FileDao dao = new FileDao();
-		
-		List<FileDto> list = dao.getFileList();
-		
-		for(FileDto f : list) {
-			System.out.println(f.getOfile());
-		}
-	}
 	
 	public FileDao() {
 		// TODO Auto-generated constructor stub

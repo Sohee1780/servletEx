@@ -9,6 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
   <!-- 설정파일 -->
   <!-- 컨텍스트 초기화 매개변수 -->
   <context-param>
@@ -78,4 +79,41 @@
     	<filter-name>SetCharacterEncodingFilter</filter-name>
     	<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<!-- 서블릿 등록 -->
+	<servlet>
+		<servlet-name>HelloServlet</servlet-name>
+		<servlet-class>servlet.HelloServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>HelloServlet</servlet-name>
+		<url-pattern>/13서블릿/HelloServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<!-- MemberAuth -->
+	<servlet>
+		<servlet-name>MemberAuth</servlet-name>
+		<servlet-class>servlet.MemberAuth</servlet-class>
+		<init-param>
+			<param-name>admin-id</param-name>
+			<param-value>test</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>MemberAuth</servlet-name>
+		<url-pattern>/13서블릿/MemberAuth.mvc</url-pattern>
+	</servlet-mapping>
+	
+	<!-- ListController -->
+	<servlet>
+		<servlet-name>ListController</servlet-name>
+		<servlet-class>model2.mvcboard.ListController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ListController</servlet-name>
+		<url-pattern>/mvcboard/list.do</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

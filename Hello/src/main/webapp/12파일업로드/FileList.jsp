@@ -17,14 +17,13 @@
 <a href="${pageContext.request.contextPath }/12파일업로드/FileUpload.jsp">파일 등록하기</a><br>
 
 <%
-
-	String pageNo = request.getParameter("pageNo");
-	Criteria criteria = new Criteria(pageNo);
+//	String pageNo = request.getParameter("pageNo");
+//	Criteria criteria = new Criteria(pageNo);
 	
-	FileDao dao = new FileDao();
-	List<FileDto> list = dao.getFileListPage(criteria);
+//	FileDao dao = new FileDao();
+//	List<FileDto> list = dao.getFileListPage(criteria);
 %>
-<c:set var="fileList" value="<%=list %>"/>
+<c:set var="fileList" value="${requestScope.list }"/>
 
 <table border='1'>
 	<tr>
