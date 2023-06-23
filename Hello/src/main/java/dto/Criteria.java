@@ -27,42 +27,32 @@ public class Criteria {
 			startNo = pageNo * amount - (amount -1);
 		}
 	}
-	
-	public Criteria(String pageNoStr) {
-		// 페이지 계산
-		super();
-		if(pageNoStr!=null) {
-			pageNo = Integer.parseInt(pageNoStr);
-			if(pageNo>0) {			
-				endNo = pageNo * amount;
-				startNo = pageNo * amount - (amount -1);
-			}
-		} else {
-			pageNo=1;
+
+	public Criteria(String searchField, String searchWord, int pageNo) {
+		this.searchField = searchField;
+		this.searchWord = searchWord;
+		if(pageNo > 0) {
+			this.pageNo = pageNo;
+			endNo = pageNo * amount;
+			startNo = pageNo * amount - (amount - 1);
 		}
 	}
 
-	public Criteria(int pageNo, int amount) {
-		super();
-		this.pageNo = pageNo;
-		this.amount = amount;
-	}
-
 	public Criteria(String searchField, String searchWord, String pageNoStr) {
-		super();
-		if(searchWord!=null) {
+		if(searchWord != null) {
 			this.searchField = searchField;
 			this.searchWord = searchWord;			
 		}
 		
-		if(pageNoStr!=null) {
+		if(pageNoStr != null
+				&& !pageNoStr.equals("")) {
 			pageNo = Integer.parseInt(pageNoStr);
-			if(pageNo>0) {			
+			if(pageNo > 0) {
 				endNo = pageNo * amount;
-				startNo = pageNo * amount - (amount -1);
+				startNo = pageNo * amount - (amount - 1);
+			}else {
+				pageNo = 1;
 			}
-		} else {
-			pageNo=1;
 		}
 	}
 

@@ -18,3 +18,25 @@ CREATE SEQUENCE seq_mvcboard_num START WITH 0 MINVALUE 0;
 -- 테스트데이터 입력
 INSERT INTO mvcboard VALUES(seq_mvcboard_num.nextval, 'test1', '테스트1', '테스트입니다1', 
     SYSDATE, 'setCharacter.PNG', 'setCharacter.PNG', 0, '1234', 0);
+    
+-- 페이징처리
+select * from (
+    select rownum rn, t.* from(
+        select *
+        from mvcboard
+        order by idx desc
+    ) t
+)where rn between 1 and 10;
+
+-- 비밀번호 검증
+SELECT * FROM mvcboard WHERE idx = 48 and pass='1234';
+
+-- 게시글 한게 선택
+SELECT idx, name, title, content, postdate, ofile, sfile, downcount, visitcount 
+FROM mvcboard
+WHERE idx=48;
+
+-- 업데이트
+
+-- 딜리트
+DELETE FROM mvcboard WHERE idx = 48;

@@ -14,13 +14,14 @@
 <body>
 
 <%
+	BoardDao board = new BoardDao();
+
 	String searchField = request.getParameter("searchField");
 	String searchWord = request.getParameter("searchWord");
 	String pageNo = request.getParameter("pageNo");
 	// 검색어가 null인경우 빈문자열로 치환
 	// searchWord = searchWord==null?"" : searchWord;
 	
-	BoardDao board = new BoardDao();
 	// 검색조건 객체로 생성
 	Criteria criteria = new Criteria(searchField, searchWord, pageNo);
 	
@@ -38,7 +39,8 @@
 	<!-- method 기본값 get 생략가능 action이 없으면 자기 페이지 다시 요청-->
 	<!-- 검색폼 -->
 	<form name='searchForm'>
-	<input type='text' name='pageNo' value='<%=criteria.getPageNo()%>'>
+	<%-- value='<%=criteria.getPageNo()%>' --%>
+	<input type='text' name='pageNo'>
  	<table border="1" width="90%">
 		<tr>
 			<td align="center">

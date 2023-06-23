@@ -1,7 +1,6 @@
-package servlet;
+package model2.mvcboard;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,24 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dto.Criteria;
-import fileUpload.FileDao;
-import fileUpload.FileDto;
-
-@WebServlet("/12파일업로드/FileListServlet")
-public class FileListServlet extends HttpServlet{
-
+@WebServlet("/mvcboard/view.do")
+public class ViewController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		FileDao dao = new FileDao();
-		List<FileDto> list = dao.getFileList();
 		
-		req.setAttribute("list", list);
-		req.getRequestDispatcher("./FileList.jsp").forward(req, resp);
+		MvcFileDao dao = new MvcFileDao();
+		MvcFileDto dto = dao.selectOne(req.getParameter("idx"));
+
+		req.setAttribute("mvFileDto", dto);
+		
+		req.getRequestDispatcher("/14MVCBoard/View.jsp").forward(req, resp);
 	}
-	
-	public FileListServlet() {
+	public ViewController() {
 		// TODO Auto-generated constructor stub
 	}
 

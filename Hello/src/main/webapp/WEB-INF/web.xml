@@ -116,4 +116,14 @@
 		<url-pattern>/mvcboard/list.do</url-pattern>
 	</servlet-mapping>
 	
+	<!-- WriteController 글쓰기 페이지로 이동-->
+	<servlet>
+		<servlet-name>WriteController</servlet-name>
+		<servlet-class>model2.mvcboard.WriteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WriteController</servlet-name>
+		<url-pattern>/mvcboard/write.do</url-pattern>
+	</servlet-mapping>
+
 </web-app>
