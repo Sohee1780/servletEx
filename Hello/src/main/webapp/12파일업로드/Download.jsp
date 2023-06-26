@@ -60,9 +60,10 @@
 		// getOutputStream의 경우 servlet에서 사용할 수 있습니다.
 		
 		// 부득이 하게 메소드를 사용해야 하는 경우 jsp 페이지에서 아래와 같이 처리
+		// 출력스트림 초기화
 		out.clear(); //out--> jsp자체 객체
 		out=pageContext.pushBody(); //out--> jsp자체 객체
-		
+		// response 내장 객체로 부터 새로운 출력 스트림을 생성
 		OutputStream outStream = response.getOutputStream();
 		
 		// 출력 스트림에 파일 내용 출력

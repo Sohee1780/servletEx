@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
+
+// 유효성 검사
 	function validateForm(form) {
 		if(form.name.value==''){
 			alert("작성자를 입력하세요.");

@@ -119,8 +119,7 @@ public class MvcFileDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		return list;
 	}
 
@@ -160,7 +159,6 @@ public class MvcFileDao {
 			e.printStackTrace();
 		}
 		
-		
 		return list;
 	}
 
@@ -168,7 +166,6 @@ public class MvcFileDao {
 	public boolean confirmPassword(String idx, String pass) {
 		boolean res = false;
 		String sql = "SELECT * FROM mvcboard WHERE idx = ? and pass=?";
-		
 		
 		try(Connection conn = DBConnPool.getConnection();
 			PreparedStatement psmt = conn.prepareStatement(sql);) {
@@ -184,8 +181,6 @@ public class MvcFileDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		return res;
 	}
 
@@ -205,6 +200,92 @@ public class MvcFileDao {
 			e.printStackTrace();
 		}
 		
+		return res;
+	}
+
+	public int insert(MvcFileDto dto) {
+		// TODO Auto-generated method stub
+		int res = 0;
+		String sql = "insert into mvcboard"
+				+ " (idx, name, title, content, pass, ofile, sfile)"
+				+ " values (seq_board_num.nextval, ?, ?, ?, ?, ?, ?)";
+		
+		try (Connection conn = DBConnPool.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(sql);){
+			psmt.setString(1, dto.getName());
+			psmt.setString(2, dto.getTitle());
+			psmt.setString(3, dto.getContent());
+			psmt.setString(4, dto.getPass());
+			psmt.setString(5, dto.getOfile());
+			psmt.setString(6, dto.getSfile());
+			
+			res = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("게시물 입력중 예외 발생");
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	public void updateVisitcount(String idx) {
+		String sql = "update mvcboard set visitcount=visitcount+1 where idx=?";
+
+		try(Connection conn = DBConnPool.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(sql);) {
+			psmt.setString(1, idx);
+			
+			psmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void updateDownCount(String idx) {
+		// TODO Auto-generated method stub
+		String sql = "update mvcboard set downcount=downcount+1 where idx=?";
+
+		try(Connection conn = DBConnPool.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(sql);) {
+			psmt.setString(1, idx);
+			
+			psmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public int updateWrite(MvcFileDto dto) {
+		// TODO Auto-generated method stub
+		String sql = "update mvcboard set name=?,title=?, content=?, ofile=?, sfile=? where idx=?";
+		int res = 0;
+	
+		System.out.println(dto.getName());
+		System.out.println(dto.getTitle());
+		System.out.println(dto.getContent());
+		System.out.println(dto.getOfile());
+		System.out.println(dto.getSfile());
+		System.out.println(dto.getIdx());
+		
+		
+		try(Connection conn = DBConnPool.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(sql);) {
+			psmt.setString(1, dto.getName());
+			psmt.setString(2, dto.getTitle());
+			psmt.setString(3, dto.getContent());
+			psmt.setString(4, dto.getOfile());
+			psmt.setString(5, dto.getSfile());
+			psmt.setString(6, dto.getIdx());
+			
+			res = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return res;
 	}
 

@@ -8,6 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+// 조회수 증가 - 상세보기, 파일다운로드
+// 수정하기
+
 <h2>MVC 모델2 게시판</h2>
 
 	<h4>총 게시물수 : ${count }</h4>
@@ -57,7 +61,14 @@
 					<td>${row.name }</td>
 					<td>${row.visitcount }</td>
 					<td>${row.postdate }</td>
-					<td><a href='"Download.jsp?oName=${row.ofile }&sName=${row.sfile }"'>다운로드</a></td>	
+					<td>
+						<!-- 첨부파일이 있으면 첨부파일 다운로드 -->
+						<c:if test="${not empty row.ofile }">
+							<a href="../mvcboard/download.do?ofile=${row.ofile }&sfile=${row.sfile}&idx=${row.idx}">
+							[Down]
+							</a>
+						</c:if>
+						</td>	
 				</tr>
 				</c:forEach>
 			</c:otherwise>

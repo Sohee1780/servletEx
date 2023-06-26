@@ -14,10 +14,10 @@ public class ViewController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		MvcFileDao dao = new MvcFileDao();
+		dao.updateVisitcount(req.getParameter("idx"));
 		MvcFileDto dto = dao.selectOne(req.getParameter("idx"));
-
-		req.setAttribute("mvFileDto", dto);
 		
+		req.setAttribute("mvFileDto", dto);		
 		req.getRequestDispatcher("/14MVCBoard/View.jsp").forward(req, resp);
 	}
 	public ViewController() {
